@@ -1,0 +1,55 @@
+<div class="px-8 pt-8">
+  <p-card>
+    <a routerLink="/stays/new" pButton>
+      <i pButtonIcon class="pi pi-plus"></i>
+      <span pButtonLabel>Neu anlegen</span>
+    </a>
+  </p-card>
+</div>
+<div class="p-8">
+  <p-panel header="Aktuelle Aufenthalte" [toggleable]="true">
+    <p class="m-0">
+      @if (stays.hasValue()) {
+    <div class="flex">
+      @for (stay of currentStays(); track stay.id) {
+      <p-card header="{{stay.title}}">
+        Start: {{ stay.startDate | date: 'dd.MM.yyyy' }} <br>
+        Ende: {{ stay.endDate | date: 'dd.MM.yyyy' }} <br>
+      </p-card>
+      }
+    </div>
+    } @else if (stays.error()) {
+    Fehler: {{ stays.error() | json }}
+    } @else {
+    Noch keine Daten vorhanden
+    }
+    </p>
+  </p-panel>
+
+</div>
+<div class="p-8">
+  <p-panel header="Vergangene Aufenthalte" [toggleable]="true">
+    <div class="flex">
+      @for (stay of pastStays(); track stay.id) {
+      <p-card header="{{stay.title}}">
+        Start: {{ stay.startDate | date: 'dd.MM.yyyy' }} <br>
+        Ende: {{ stay.endDate | date: 'dd.MM.yyyy' }} <br>
+      </p-card>
+      }
+    </div>
+  </p-panel>
+</div>
+@if (upcomingStays()) {
+<div class="p-8">
+  <p-panel header="Kommende Aufenthalte" [toggleable]="true">
+    <div class="flex">
+      @for (stay of upcomingStays(); track stay.id) {
+      <p-card header="{{stay.title}}">
+        Start: {{ stay.startDate | date: 'dd.MM.yyyy' }} <br>
+        Ende: {{ stay.endDate | date: 'dd.MM.yyyy' }} <br>
+      </p-card>
+      }
+    </div>
+  </p-panel>
+</div>
+}

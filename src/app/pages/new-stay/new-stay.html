@@ -1,0 +1,38 @@
+<div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-20 lg:px-80 h-screen">
+  <form [formGroup]="stayForm" (ngSubmit)="onSubmit()"
+    class="bg-surface-0 dark:bg-surface-900 p-8 md:p-12 shadow-sm rounded-2xl w-full max-w-sm mx-auto flex flex-col gap-8">
+    <div class="flex flex-col items-center gap-4">
+      <div class="flex items-center gap-4">
+        <img src="Szbk-Logo1.svg" alt="Bekalla Logo" class="w-20" />
+      </div>
+      <div class="flex flex-col items-center gap-2 w-full">
+        <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">
+          Neuen Aufenthalt erstellen</div>
+        <!-- @if(errorMessage()) {
+        <p-message severity="error">{{ errorMessage() }}</p-message>
+        } -->
+      </div>
+    </div>
+    <div class="flex flex-col gap-6 w-full">
+      <div class="flex flex-col gap-2 w-full">
+        <label for="title" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">Titel</label>
+        <input formControlName="title" pInputText id="title" type="text" placeholder="Titel"
+          class="w-full px-3 py-2 shadow-sm rounded-lg border dark:border-gray-300" />
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <label for="startDate" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">Start
+          Datum</label>
+        <p-datepicker id="startDate" formControlName="startDate" dateFormat="dd.mm.yy" />
+      </div>
+      <div class="flex flex-col gap-2 w-full">
+        <label for="endDate" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">End
+          Datum</label>
+        <p-datepicker id="endDate" formControlName="endDate" dateFormat="dd.mm.yy" />
+      </div>
+    </div>
+    <button pButton class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
+      <i pButtonIcon class="pi pi-save text-base! leading-normal!"></i>
+      <span pButtonLabel>Speichern</span>
+    </button>
+  </form>
+</div>
