@@ -10,19 +10,14 @@
   <p-panel header="Aktuelle Aufenthalte" [toggleable]="true">
     <p class="m-0">
       @if (stays.hasValue()) {
-    <div class="flex">
       @for (stay of currentStays(); track stay.id) {
-      <p-card header="{{stay.title}}">
-        Start: {{ stay.startDate | date: 'dd.MM.yyyy' }} <br>
-        Ende: {{ stay.endDate | date: 'dd.MM.yyyy' }} <br>
-      </p-card>
+      <app-stay-card [stay]="stay" />
       }
-    </div>
-    } @else if (stays.error()) {
-    Fehler: {{ stays.error() | json }}
-    } @else {
-    Noch keine Daten vorhanden
-    }
+      } @else if (stays.error()) {
+      Fehler: {{ stays.error() | json }}
+      } @else {
+      Noch keine Daten vorhanden
+      }
     </p>
   </p-panel>
 
@@ -31,10 +26,7 @@
   <p-panel header="Vergangene Aufenthalte" [toggleable]="true">
     <div class="flex">
       @for (stay of pastStays(); track stay.id) {
-      <p-card header="{{stay.title}}">
-        Start: {{ stay.startDate | date: 'dd.MM.yyyy' }} <br>
-        Ende: {{ stay.endDate | date: 'dd.MM.yyyy' }} <br>
-      </p-card>
+      <app-stay-card [stay]="stay" />
       }
     </div>
   </p-panel>
@@ -44,10 +36,7 @@
   <p-panel header="Kommende Aufenthalte" [toggleable]="true">
     <div class="flex">
       @for (stay of upcomingStays(); track stay.id) {
-      <p-card header="{{stay.title}}">
-        Start: {{ stay.startDate | date: 'dd.MM.yyyy' }} <br>
-        Ende: {{ stay.endDate | date: 'dd.MM.yyyy' }} <br>
-      </p-card>
+      <app-stay-card [stay]="stay" />
       }
     </div>
   </p-panel>

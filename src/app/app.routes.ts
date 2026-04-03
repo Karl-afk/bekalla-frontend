@@ -19,4 +19,15 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/new-stay/new-stay').then((m) => m.NewStay),
     canActivate: [authGuard],
   },
+  {
+    path: 'stays/:id',
+    title: 'Aufenthalt bearbeiten',
+    loadComponent: () => import('./pages/edit-stay/edit-stay').then((m) => m.EditStay),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'default-tasks',
+    title: 'Standard Aufgaben',
+    loadComponent: () => import('./pages/default-tasks/default-tasks').then((m) => m.DefaultTasks),
+  },
 ];

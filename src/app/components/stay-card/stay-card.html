@@ -1,0 +1,7 @@
+<a routerLink="/stays/{{stay().id}}">
+  <p-card header="{{stay().title}}">
+    <p>Start: {{ stay().startDate | date: 'dd.MM.yyyy' }}</p>
+    <p-divider />
+    <p>Ende: {{ stay().endDate | date: 'dd.MM.yyyy' }}</p>
+  </p-card>
+</a>

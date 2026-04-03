@@ -1,0 +1,31 @@
+@if (defaultTasks()) {
+<div [formGroup]="form">
+  <div class="flex gap-3">
+    <!-- <button type="button" (click)="save()" pButton label="Speichern" icon="pi pi-save" severity="primary"
+      class="mb-3"></button> -->
+    <form [formGroup]="newTaskForm" class="grid items-center gap-3 md:grid-cols-3 mb-3">
+      <input pInputText formControlName="title" id="title" placeholder="Task Titel"
+        [invalid]="newTaskForm.controls.title.invalid && newTaskForm.controls.title.touched" />
+      <p-select formControlName="category" [options]="selectOptions" optionLabel="name" optionValue="name"
+        [invalid]="newTaskForm.controls.category.invalid && newTaskForm.controls.category.touched" />
+      <button type="button" (click)="addTask()" pButton label="Task hinzufügen" icon="pi pi-plus" severity="secondary"
+        class="mb-3"></button>
+    </form>
+  </div>
+  <div formArrayName="defaultTasks">
+    @for (taskGroup of tasksArray.controls; let i = $index; track taskGroup) {
+    <div [formGroup]="$any(taskGroup)" class="flex gap-3 items-center mb-3">
+      <input pInputText formControlName="title" id="title" placeholder="Task Titel"
+        [invalid]="!tasksArray.controls[i].valid" class="w-full" />
+      <p-select formControlName="category" [options]="selectOptions" optionLabel="name" optionValue="name"
+        [invalid]="!tasksArray.controls[i].valid" class="w-60" />
+      <button type="button" (click)="save(i, tasksArray.controls[i].value.id)" pButton icon="pi pi-save"
+        severity="primary" class="w-30"></button>
+      <button type="button" (click)="removeTask(i, tasksArray.controls[i].value.id)" pButton icon="pi pi-trash"
+        severity="danger"></button>
+    </div>
+    }
+  </div>
+
+</div>
+}

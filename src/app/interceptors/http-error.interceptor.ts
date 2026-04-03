@@ -6,7 +6,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
-import { Toast } from '../services/toast';
+import { ToastService } from '../services/toast-service';
 
 export const errorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -16,7 +16,7 @@ export const errorInterceptor: HttpInterceptorFn = (
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       let userMessage = 'Ein unerwarteter Fehler ist aufgetreten';
-      const toastService = injector.get(Toast);
+      const toastService = injector.get(ToastService);
 
       if (error.status === 0) {
         userMessage = 'Keine Internetverbindung. Bitte prüfen Sie Ihre Verbindung.';
@@ -34,11 +34,11 @@ export const errorInterceptor: HttpInterceptorFn = (
         userMessage = error.error?.message || error.message || userMessage;
       }
 
-      console.error('HTTP Error:', error);
-
       // Globale Notification (Toast, Snackbar etc.)
       showNotification(userMessage);
-      toastService.showError(userMessage);
+      if (error.status !== 401) {
+        toastService.showError(userMessage);
+      }
 
       return throwError(() => error); // Error weiterleiten für Component-Handling
     }),

@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { LoginDto } from '../types/loginDto';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
@@ -11,6 +11,16 @@ import { environment } from '../../environments/environment';
 export class Auth {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
+  isLoggedIn = signal<boolean>(!!localStorage.getItem('token'));
+
+  getAccessToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  setAccessToken(token: string): void {
+    localStorage.setItem('token', token);
+    this.isLoggedIn.set(true);
+  }
   login(loginDto: LoginDto) {
     return this.http.post<{ token: string; message: string }>(
       `${this.apiUrl}/auth/login`,
@@ -23,6 +33,14 @@ export class Auth {
 
   logout() {
     localStorage.removeItem('token');
+    this.isLoggedIn.set(false);
+    return this.http.post(
+      `${this.apiUrl}/auth/logout`,
+      {},
+      {
+        withCredentials: true, // Refresh Cookie!
+      },
+    );
   }
 
   refreshToken(): Observable<{ token: string }> {

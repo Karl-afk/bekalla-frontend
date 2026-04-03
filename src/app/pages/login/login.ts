@@ -38,6 +38,7 @@ export class Login {
       )
       .subscribe((res) => {
         console.log('🚀 ~ Login ~ onSubmit ~ res:', res);
+        this.auth.isLoggedIn.set(true);
         localStorage.setItem('token', res.token);
         this.router.navigate(['/dashboard']);
       });

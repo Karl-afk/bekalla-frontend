@@ -1,3 +1,4 @@
+@if (authService.isLoggedIn()) {
 <nav class="bg-[#f7f7f8] dark:bg-neutral-900 h-screen fixed top-0 left-0 min-w-62.5 py-6 px-4">
   <div class="relative">
     <a routerLink="/dashboard"><img src="/Szbk-Logo1.svg" alt="logo" class="w-37.5" />
@@ -21,8 +22,15 @@
           <span pButtonLabel>Dashboard</span>
         </a>
       </li>
+      <li>
+        <a routerLink="default-tasks" pButton>
+          <i pButtonIcon class="pi pi-home text-base! leading-normal! mr-3"></i>
+          <span pButtonLabel>Default Tasks</span>
+        </a>
+      </li>
 
       <li>
+        <p-divider />
         <button pButton (click)="logout()">
           <i pButtonIcon class="pi pi-sign-out text-base! leading-normal! mr-3"></i>
           <span pButtonLabel>Logout</span>
@@ -31,3 +39,4 @@
     </ul>
   </div>
 </nav>
+}

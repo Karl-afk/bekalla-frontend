@@ -1,0 +1,60 @@
+<form [formGroup]="stayForm" (ngSubmit)="save()"
+  class="bg-surface-0 dark:bg-surface-900 p-8 md:p-12 shadow-sm rounded-2xl flex flex-col gap-8">
+  <div class="flex flex-col items-center gap-4">
+
+    <div class="flex items-center gap-2 w-full">
+      <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight w-full">
+        Aufenthalt bearbeiten</div>
+      <p-button (onClick)="save()" label="Speichern" icon="pi pi-save" severity="success"
+        class="text-base! leading-normal! mr-3" />
+
+    </div>
+  </div>
+  <div class="flex flex-col gap-6 w-full">
+    <div class="flex flex-col gap-2 w-full">
+      <label for="title" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">Titel</label>
+      <input formControlName="title" pInputText id="title" type="text" placeholder="Titel"
+        class="w-full px-3 py-2 shadow-sm rounded-lg border dark:border-gray-300" />
+    </div>
+    <div class="flex gap-2 w-full items-center">
+      <label for="startDate" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">Start
+        Datum</label>
+      <p-datepicker id="startDate" formControlName="startDate" dateFormat="dd.mm.yy" />
+      <label for="endDate" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">End
+        Datum</label>
+      <p-datepicker id="endDate" formControlName="endDate" dateFormat="dd.mm.yy" />
+    </div>
+  </div>
+  <div [formGroup]="taskForm">
+    <div formArrayName="tasks">
+      @for (taskGroup of tasksArray.controls; let i = $index; track i) {
+      <div [formGroupName]="i" class="grid grid-cols-4 gap-3 items-center">
+        <input pInputText formControlName="title" id="title" placeholder="Task Titel" />
+        <p-select formControlName="category" [options]="categories" optionLabel="name" optionValue="code" />
+
+
+        @if (taskGroup.get('category')?.value !== 'shopping') {
+        <p-checkbox formControlName="isDone" [binary]="true" />
+        }
+        <!-- Amount nur bei shopping category -->
+        @if (taskGroup.get('category')?.value !== 'departure') {
+        <p-inputnumber formControlName="amount" placeholder="Stück" />
+        }
+
+        <button type="button" (click)="removeTask(i)" pButton icon="pi pi-trash" severity="danger"></button>
+      </div>
+      }
+    </div>
+
+    <!-- Task hinzufügen -->
+    <button type="button" (click)="addTask()" pButton label="Task hinzufügen" icon="pi pi-plus"
+      severity="secondary"></button>
+  </div>
+
+  <p-button type="submit" label="Speichern" [disabled]="stayForm.invalid" />
+</form>
+
+<div class="mt-8">
+  <p-button (onClick)="delete()" label="Löschen" icon="pi pi-trash" severity="danger"
+    class="text-base! leading-normal! mr-3" />
+</div>

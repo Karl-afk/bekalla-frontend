@@ -1,5 +1,5 @@
 <app-sidenav />
-<div class="ml-62.5">
+<div [class]="authService.isLoggedIn() ? 'ml-62.5 p-8' : ''">
   <router-outlet />
 </div>
-<p-toast />
+<p-toast position="top-right" key="global"></p-toast>
