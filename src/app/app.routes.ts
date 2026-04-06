@@ -29,5 +29,12 @@ export const routes: Routes = [
     path: 'default-tasks',
     title: 'Standard Aufgaben',
     loadComponent: () => import('./pages/default-tasks/default-tasks').then((m) => m.DefaultTasks),
+    canActivate: [authGuard],
+  },
+  {
+    path: 'reminder',
+    title: 'Reminder',
+    loadComponent: () => import('./pages/reminder/reminder').then((m) => m.Reminder),
+    canActivate: [authGuard],
   },
 ];

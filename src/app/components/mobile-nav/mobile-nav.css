@@ -1,0 +1,104 @@
+.mobile-nav {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  height: 64px;
+  padding-bottom: env(safe-area-inset-bottom); /* iPhone Notch */
+
+  background: var(--p-surface-0);
+  border-top: 1px solid var(--p-surface-200);
+  box-shadow: 0 -4px 16px oklch(0 0 0 / 0.06);
+}
+
+.mobile-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  min-width: 44px; /* Touch target */
+  min-height: 44px;
+  padding: 0 4px;
+  text-decoration: none;
+  color: var(--p-text-muted-color);
+  transition: color 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+
+/* Active indicator pill */
+.mobile-nav__item::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 32px;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--p-primary-color);
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-nav__item.active {
+  color: var(--p-primary-color);
+}
+
+.mobile-nav__item.active::before {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Tap feedback */
+.mobile-nav__item:active {
+  opacity: 0.7;
+}
+
+.mobile-nav__icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.mobile-nav__icon-wrap i {
+  font-size: 20px;
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-nav__item.active .mobile-nav__icon-wrap i {
+  transform: scale(1.15);
+}
+
+.mobile-nav__label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mobile-nav__badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 99px;
+  background: var(--p-red-500);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}

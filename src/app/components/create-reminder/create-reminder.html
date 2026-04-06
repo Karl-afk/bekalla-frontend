@@ -1,0 +1,81 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-4">
+
+  <!-- Titel -->
+  <div class="flex flex-col gap-1">
+    <label for="title">Titel *</label>
+    <input pInputText id="title" formControlName="title" placeholder="z.B. Mülltonne rausstellen"
+      [invalid]="isInvalid('title')" />
+    @if (isInvalid('title')) {
+    <small class="text-red-500">Titel ist erforderlich</small>
+    }
+  </div>
+
+  <!-- Beschreibung -->
+  <div class="flex flex-col gap-1">
+    <label for="body">Beschreibung</label>
+    <textarea pTextarea id="body" formControlName="body" placeholder="Optionale Beschreibung..." rows="2">
+        </textarea>
+  </div>
+
+  <!-- Frequenz + Zeit nebeneinander -->
+  <div class="grid grid-cols-2 gap-3">
+    <div class="flex flex-col gap-1">
+      <label>Häufigkeit *</label>
+      <p-select formControlName="frequency" [options]="frequencies" optionLabel="label" optionValue="value"
+        placeholder="Bitte wählen" [invalid]="isInvalid('frequency')" />
+      @if (isInvalid('frequency')) {
+      <small class="text-red-500">Bitte Häufigkeit wählen</small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-1">
+      <label>Uhrzeit *</label>
+      <p-datepicker formControlName="time" [timeOnly]="true" placeholder="18:00" hourFormat="24"
+        [invalid]="isInvalid('time')" />
+      @if (isInvalid('time')) {
+      <small class="text-red-500">Uhrzeit ist erforderlich</small>
+      }
+    </div>
+  </div>
+
+  <!-- Dynamisches scheduleValue Feld -->
+  @switch (form.get('frequency')?.value) {
+
+  @case ('weekly') {
+  <div class="flex flex-col gap-1">
+    <label>Wochentag *</label>
+    <p-select formControlName="scheduleValue" [options]="weekdays" optionLabel="label" optionValue="value"
+      placeholder="Tag wählen" [invalid]="isInvalid('scheduleValue')" />
+  </div>
+  }
+
+  @case ('monthly') {
+  <div class="flex flex-col gap-1">
+    <label>Tag im Monat *</label>
+    <p-select formControlName="scheduleValue" [options]="monthDays" optionLabel="label" optionValue="value"
+      placeholder="Tag wählen" [invalid]="isInvalid('scheduleValue')" />
+  </div>
+  }
+
+  @case ('once') {
+  <div class="flex flex-col gap-1">
+    <label>Datum *</label>
+    <p-datepicker formControlName="scheduleValue" dateFormat="yy-mm-dd" placeholder="Datum wählen" [minDate]="today"
+      [invalid]="isInvalid('scheduleValue')" />
+  </div>
+  }
+  }
+
+  <!-- Aktiv Toggle -->
+  <div class="flex items-center gap-3">
+    <p-toggleswitch formControlName="isActive" />
+    <label>Reminder aktiv</label>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex gap-2 justify-end">
+    <p-button type="button" label="Abbrechen" severity="secondary" (onClick)="cancelled.emit()" />
+    <p-button type="submit" label="Speichern" icon="pi pi-check" [loading]="loading" [disabled]="form.invalid" />
+  </div>
+
+</form>

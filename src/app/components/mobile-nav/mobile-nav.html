@@ -1,0 +1,16 @@
+<nav class="mobile-nav" role="navigation" aria-label="Hauptnavigation">
+  @for (item of navItems; track item.route) {
+  <a [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: item.route === '/' }"
+    class="mobile-nav__item" [attr.aria-label]="item.label">
+    <span class="mobile-nav__icon-wrap">
+      <i [class]="'pi ' + item.icon"></i>
+      @if (item.badge) {
+      <span class="mobile-nav__badge" aria-hidden="true">
+        {{ item.badge > 99 ? '99+' : item.badge }}
+      </span>
+      }
+    </span>
+    <span class="mobile-nav__label">{{ item.label }}</span>
+  </a>
+  }
+</nav>

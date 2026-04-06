@@ -2,15 +2,30 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   <title>BekallaFrontend</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="Szbk-Logo1.svg">
+  <base href="/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="Szbk-Logo1.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <!-- PWA iOS Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BekallaApp">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- iOS Icons (Safari ignoriert manifest.webmanifest Icons!) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-touch-icon.png">
+
+  <!-- Splash Screen Farbe -->
+  <meta name="theme-color" content="#ffffff">
 </head>
 
 <body>
   <app-root></app-root>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 
 </html>

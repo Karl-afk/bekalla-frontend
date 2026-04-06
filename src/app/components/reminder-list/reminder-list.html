@@ -1,0 +1,132 @@
+<p-confirmDialog />
+
+<p-table [value]="reminders()" [loading]="remindersResource.isLoading()" editMode="row" dataKey="id"
+  [tableStyle]="{ 'min-width': '60rem' }">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Titel</th>
+      <th>Beschreibung</th>
+      <th>Häufigkeit</th>
+      <th>Zeitplan</th>
+      <th>Uhrzeit</th>
+      <th>Aktiv</th>
+      <th style="width: 120px"></th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-reminder let-editing="editing" let-ri="rowIndex">
+    <tr [pEditableRow]="reminder">
+
+      <!-- Titel -->
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText [(ngModel)]="editForms[reminder.id].title" class="w-full" placeholder="Titel" />
+          </ng-template>
+          <ng-template pTemplate="output">{{ reminder.title }}</ng-template>
+        </p-cellEditor>
+      </td>
+
+      <!-- Beschreibung -->
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <input pInputText [(ngModel)]="editForms[reminder.id].body" class="w-full" placeholder="Beschreibung" />
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ reminder.body || '—' }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+
+      <!-- Häufigkeit -->
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <p-select [(ngModel)]="editForms[reminder.id].frequency" [options]="frequencies" optionLabel="label"
+              optionValue="value" (onChange)="onFrequencyChange(reminder.id)" />
+          </ng-template>
+          <ng-template pTemplate="output">
+            <p-tag [value]="frequencyLabel(reminder.frequency)" [severity]="frequencySeverity(reminder.frequency)" />
+          </ng-template>
+        </p-cellEditor>
+      </td>
+
+      <!-- Zeitplan (scheduleValue) -->
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            @switch (editForms[reminder.id].frequency) {
+            @case ('weekly') {
+            <p-select [(ngModel)]="editForms[reminder.id].scheduleValue" [options]="weekdayOptions" optionLabel="label"
+              optionValue="value" />
+            }
+            @case ('monthly') {
+            <p-select [(ngModel)]="editForms[reminder.id].scheduleValue" [options]="monthDays" optionLabel="label"
+              optionValue="value" />
+            }
+            @case ('once') {
+            <p-datepicker [(ngModel)]="editForms[reminder.id].scheduleValue" dateFormat="yy-mm-dd" [minDate]="today" />
+            }
+            @default {
+            <span class="text-muted-color">—</span>
+            }
+            }
+          </ng-template>
+          <ng-template pTemplate="output">
+            {{ scheduleLabel(reminder) }}
+          </ng-template>
+        </p-cellEditor>
+      </td>
+
+      <!-- Uhrzeit -->
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <p-datepicker [(ngModel)]="editForms[reminder.id].time" [timeOnly]="true" hourFormat="24" />
+          </ng-template>
+          <ng-template pTemplate="output">{{ reminder.time }}</ng-template>
+        </p-cellEditor>
+      </td>
+
+      <!-- Aktiv Toggle -->
+      <td>
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <p-toggleswitch [(ngModel)]="editForms[reminder.id].isActive" />
+          </ng-template>
+          <ng-template pTemplate="output">
+            <p-tag [value]="reminder.isActive ? 'Aktiv' : 'Inaktiv'"
+              [severity]="reminder.isActive ? 'success' : 'secondary'" />
+          </ng-template>
+        </p-cellEditor>
+      </td>
+
+      <!-- Aktionen -->
+      <td>
+        <div class="flex gap-2">
+          @if (!editing) {
+          <p-button pInitEditableRow icon="pi pi-pencil" severity="secondary" [rounded]="true" [text]="true"
+            (onClick)="initEdit(reminder)" />
+          <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [text]="true"
+            (onClick)="confirmDelete(reminder)" />
+          } @else {
+          <p-button pSaveEditableRow icon="pi pi-check" severity="success" [rounded]="true" [text]="true"
+            (onClick)="saveEdit(reminder)" />
+          <p-button pCancelEditableRow icon="pi pi-times" severity="secondary" [rounded]="true" [text]="true"
+            (onClick)="cancelEdit(reminder)" />
+          }
+        </div>
+      </td>
+
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="7" class="text-center py-8 text-muted-color">
+        Keine Erinnerungen vorhanden
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

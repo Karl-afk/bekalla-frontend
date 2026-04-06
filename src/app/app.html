@@ -1,5 +1,6 @@
-<app-sidenav />
-<div [class]="authService.isLoggedIn() ? 'ml-62.5 p-8' : ''">
+<div class="p-8">
   <router-outlet />
+  <p-button class="mt-3" label="Benachrichtigungen aktivieren" icon="pi pi-bell" (onClick)="enableNotifications()" />
 </div>
+<app-mobile-nav></app-mobile-nav>
 <p-toast position="top-right" key="global"></p-toast>

@@ -1,0 +1,10 @@
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-xl font-semibold">Erinnerungen</h1>
+  <p-button label="Neue Erinnerung" icon="pi pi-plus" (onClick)="showForm = true" />
+</div>
+
+<app-reminder-list #list />
+
+<p-dialog [(visible)]="showForm" header="Neuer Reminder" [modal]="true">
+  <app-create-reminder (saved)="onSaved()" (cancelled)="showForm = false" />
+</p-dialog>

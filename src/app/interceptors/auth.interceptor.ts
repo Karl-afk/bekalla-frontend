@@ -16,7 +16,13 @@ let isRefreshing = false;
 const refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
 // Routen die KEINEN Token brauchen
-const PUBLIC_URLS = ['/api/v1/auth/login', '/api/v1/auth/register', '/api/v1/auth/refresh'];
+const PUBLIC_URLS = [
+  '/api/v1/notify/subscribe',
+  '/api/v1/notify/public-key',
+  '/api/v1/auth/login',
+  '/api/v1/auth/register',
+  '/api/v1/auth/refresh',
+];
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
